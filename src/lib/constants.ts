@@ -1,0 +1,2 @@
+export const WEB3AUTH_PROVIDER_CLIENT_ID = import.meta.env
+  .VITE_WEB3_AUTH_PROVIDER_CLIENT_ID;

@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import { CardFooter } from "./ui/card";
 import { Input } from "./ui/input";
 import { AudioLinesIcon, RefreshCw, Send } from "lucide-react";
-import { hanleChatCompletion } from "@/lib/http";
+import { createNewConversationId, hanleChatCompletion } from "@/lib/http";
 import { toast } from "sonner";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { MessageChunk } from "@/lib/types";
@@ -16,7 +16,7 @@ export const ChatInput = () => {
   const [inputValue, setInputValue] = useState("");
   const { user } = useDynamicContext();
   const { isTyping, setIsTyping } = useChatLoading();
-  const { addMessage, addChunkToMessage } = useConversation();
+  const { addMessage, addChunkToMessage, conversation } = useConversation();
 
   const onSendMessage = async () => {
     if (!inputValue) return;
@@ -27,7 +27,19 @@ export const ChatInput = () => {
     addMessage({ content: inputValue, role: "user" });
     setInputValue("");
     setIsTyping(true);
-
+    if (!conversation.id) {
+      try {
+        const conversationId = await createNewConversationId({
+          userId: user.userId,
+        });
+        console.log({ conversationId });
+      } catch (err) {
+        setIsTyping(false);
+        toast.error("Error while creating a new conversation:");
+        console.error("Error while creating a new conversation:", err);
+        return;
+      }
+    }
     const reader = await hanleChatCompletion({
       message: inputValue,
       userId: user.userId,

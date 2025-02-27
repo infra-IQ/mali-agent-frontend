@@ -21,6 +21,7 @@ type ConversationState = {
     chunk: string;
     role: Message["role"];
   }) => void;
+  updateConversationId: (conversationId: string) => void;
 };
 
 export const useConversation = create<ConversationState>((set) => ({
@@ -73,4 +74,12 @@ export const useConversation = create<ConversationState>((set) => ({
         },
       };
     }),
+  updateConversationId: (conversationId) =>
+    set((state) => ({
+      ...state,
+      conversation: {
+        ...state.conversation,
+        id: conversationId,
+      },
+    })),
 }));

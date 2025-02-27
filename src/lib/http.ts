@@ -9,9 +9,11 @@ export enum ENDPOINT {
 export async function hanleChatCompletion({
   message,
   userId,
+  conversationId,
 }: {
   message: string;
   userId: string;
+  conversationId: string;
 }) {
   try {
     const response = await fetch(`${BACKEND_URL}${ENDPOINT.chat}`, {
@@ -19,7 +21,7 @@ export async function hanleChatCompletion({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ content: message, userId }),
+      body: JSON.stringify({ content: message, userId, conversationId }),
     });
 
     const reader = response.body as ReadableStream<unknown>;

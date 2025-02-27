@@ -16,7 +16,8 @@ export const ChatInput = () => {
   const [inputValue, setInputValue] = useState("");
   const { user } = useDynamicContext();
   const { isTyping, setIsTyping } = useChatLoading();
-  const { addMessage, addChunkToMessage, conversation } = useConversation();
+  const { addMessage, addChunkToMessage, conversation, updateConversationId } =
+    useConversation();
 
   const onSendMessage = async () => {
     if (!inputValue) return;
@@ -27,12 +28,14 @@ export const ChatInput = () => {
     addMessage({ content: inputValue, role: "user" });
     setInputValue("");
     setIsTyping(true);
+    let newConversationId = "";
     if (!conversation.id) {
       try {
-        const conversationId = await createNewConversationId({
+        const data = await createNewConversationId({
           userId: user.userId,
         });
-        console.log({ conversationId });
+        updateConversationId(data.conversation.id);
+        newConversationId = data.conversation.id;
       } catch (err) {
         setIsTyping(false);
         toast.error("Error while creating a new conversation:");
@@ -40,9 +43,11 @@ export const ChatInput = () => {
         return;
       }
     }
+
     const reader = await hanleChatCompletion({
       message: inputValue,
       userId: user.userId,
+      conversationId: conversation.id || newConversationId,
     });
 
     if (!reader) return;

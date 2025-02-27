@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bot, Sparkles, Trash2 } from "lucide-react";
-import { toast } from "sonner";
+import { Bot } from "lucide-react";
 import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
 import { ChatInput } from "./components/ChatInput";
 import { MessagesArea } from "./components/ui/MessagesArea";

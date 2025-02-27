@@ -2,6 +2,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useRef } from "react";
 import { useConversation } from "../states/conversation";
 import { useChatLoading } from "../states/chatLoading";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export const MessagesArea = () => {
   const {
@@ -36,9 +38,12 @@ export const MessagesArea = () => {
                   : "bg-muted border border-border"
               }`}
             >
-              <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                {message.content}
-              </p>
+              <div className="text-sm leading-relaxed whitespace-pre-wrap">
+                <ReactMarkdown
+                  children={message.content}
+                  remarkPlugins={[remarkGfm]}
+                />
+              </div>
             </div>
           </div>
         ))}

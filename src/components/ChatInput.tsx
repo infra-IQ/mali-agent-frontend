@@ -40,7 +40,6 @@ export const ChatInput = () => {
     const decoder = new TextDecoder();
     for await (const chunk of streamAsyncIterable(reader)) {
       const chunkValue = decoder.decode(new Uint8Array(chunk as any));
-      console.log(chunkValue);
       if (chunkValue.trim() === "") continue;
       const lines = chunkValue
         .replace(/data:\s+/g, "")

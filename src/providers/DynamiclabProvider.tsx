@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http } from "viem";
 import { sepolia } from "viem/chains";
 import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
+import { ZeroDevSmartWalletConnectors } from "@dynamic-labs/ethereum-aa";
 import { ReactNode } from "react";
 
 const config = createConfig({
@@ -27,7 +28,10 @@ export default function DynamicLabProvider({
       settings={{
         // Find your environment id at https://app.dynamic.xyz/dashboard/developer
         environmentId: import.meta.env.VITE_DYNAMIC_LAB_ENV_ID,
-        walletConnectors: [EthereumWalletConnectors],
+        walletConnectors: [
+          EthereumWalletConnectors,
+          ZeroDevSmartWalletConnectors,
+        ],
         overrides: {
           evmNetworks: [
             {

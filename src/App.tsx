@@ -6,6 +6,8 @@ import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Send, Bot, Sparkles, RefreshCw, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
+import { ChatInput } from "./components/ChatInput";
+import { MessagesArea } from "./components/ui/MessagesArea";
 
 interface Message {
   id: string;
@@ -141,81 +143,8 @@ function App() {
               </div>
             </div>
           </CardHeader>
-
-          <ScrollArea className="flex-1 p-4 h-[calc(85vh-140px)]">
-            <div className="space-y-4 pb-4">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${
-                    message.role === "user" ? "justify-end" : "justify-start"
-                  }`}
-                >
-                  <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                      message.role === "user"
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted border border-border"
-                    }`}
-                  >
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                      {message.content}
-                    </p>
-                    <p
-                      className={`text-xs mt-1 ${
-                        message.role === "user"
-                          ? "text-primary-foreground/70"
-                          : "text-muted-foreground"
-                      }`}
-                    >
-                      {formatTime(message.timestamp)}
-                    </p>
-                  </div>
-                </div>
-              ))}
-              {isTyping && (
-                <div className="flex justify-start">
-                  <div className="max-w-[80%] rounded-2xl px-4 py-3 bg-muted border border-border">
-                    <div className="flex items-center gap-1">
-                      <div className="h-2 w-2 rounded-full bg-foreground/40 animate-pulse"></div>
-                      <div className="h-2 w-2 rounded-full bg-foreground/40 animate-pulse delay-150"></div>
-                      <div className="h-2 w-2 rounded-full bg-foreground/40 animate-pulse delay-300"></div>
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-          </ScrollArea>
-
-          <CardFooter className="p-4 border-t bg-card">
-            <form
-              className="flex w-full items-center space-x-2"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSendMessage();
-              }}
-            >
-              <Input
-                placeholder="Type your message..."
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                className="flex-1 bg-background border-muted"
-                disabled={isTyping}
-              />
-              <Button
-                type="submit"
-                size="icon"
-                disabled={!inputValue.trim() || isTyping}
-              >
-                {isTyping ? (
-                  <RefreshCw className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Send className="h-4 w-4" />
-                )}
-              </Button>
-            </form>
-          </CardFooter>
+          <MessagesArea/>
+          <ChatInput handleSendMessage={handleSendMessage}/>
         </Card>
       </div>
     </div>

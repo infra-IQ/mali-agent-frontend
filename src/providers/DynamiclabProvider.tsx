@@ -28,6 +28,25 @@ export default function DynamicLabProvider({
         // Find your environment id at https://app.dynamic.xyz/dashboard/developer
         environmentId: import.meta.env.VITE_DYNAMIC_LAB_ENV_ID,
         walletConnectors: [EthereumWalletConnectors],
+        overrides: {
+          evmNetworks: [
+            {
+              name: sepolia.name,
+              chainId: sepolia.id,
+              networkId: sepolia.id,
+              nativeCurrency: {
+                name: sepolia.nativeCurrency.name,
+                symbol: sepolia.nativeCurrency.symbol,
+                decimals: 18,
+              },
+              rpcUrls: [sepolia.rpcUrls.default.http[0]],
+              iconUrls: [
+                "https://imgs.search.brave.com/ASU5HkLJLDzTMaUKqP1JeYiql6OwV7KPAu7my7sO8Kc/rs:fit:40:40:1:0/g:ce/aHR0cHM6Ly9jb2lu/LWltYWdlcy5jb2lu/Z2Vja28uY29tL2Nv/aW5zL2ltYWdlcy8y/NzkvbGFyZ2UvZXRo/ZXJldW0ucG5nPzE2/OTY1MDE2Mjg",
+              ],
+              blockExplorerUrls: ["https://sepolia.etherscan.io"],
+            },
+          ],
+        },
       }}
     >
       <WagmiProvider config={config}>

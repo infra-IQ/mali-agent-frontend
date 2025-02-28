@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.24.0",
     "@dynamic-labs/client": "^4.8.1",
     "@dynamic-labs/ethereum": "^4.8.1",
     "@dynamic-labs/ethereum-aa": "^4.8.1",
@@ -36,6 +37,7 @@
     "framer-motion": "11",
     "lucide-react": "^0.476.0",
     "next-themes": "^0.4.4",
+    "paypack-js": "^0.2.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^10.0.0",

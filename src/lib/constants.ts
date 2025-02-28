@@ -3,3 +3,4 @@ export const WEB3AUTH_PROVIDER_CLIENT_ID = import.meta.env
 export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export const ESCROW_CONTRACT_ADDRESS =
   "0x065f86F3A5B1dE3B06A5ceBD5957Aee07B734445";
+export const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;

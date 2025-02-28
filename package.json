@@ -15,7 +15,6 @@
     "@dynamic-labs/ethereum": "^4.8.1",
     "@dynamic-labs/ethereum-aa": "^4.8.1",
     "@dynamic-labs/ethereum-core": "^4.8.1",
-    "@dynamic-labs/sdk-react-core": "^4.8.1",
     "@dynamic-labs/viem-extension": "^4.8.1",
     "@dynamic-labs/wagmi-connector": "^4.8.1",
     "@dynamic-labs/zerodev-extension": "^4.8.1",

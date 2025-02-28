@@ -3,25 +3,25 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { CardFooter } from "./ui/card";
 import { Input } from "./ui/input";
-import { AudioLinesIcon, RefreshCw, Send } from "lucide-react";
+import { RefreshCw, Send } from "lucide-react";
 import { createNewConversationId, hanleChatCompletion } from "@/lib/http";
 import { toast } from "sonner";
-import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { MessageChunk } from "@/lib/types";
 import { useChatLoading } from "./states/chatLoading";
 import { useConversation } from "./states/conversation";
 import { streamAsyncIterable } from "@/lib/utils";
+import { useAuth } from "@clerk/clerk-react";
 
 export const ChatInput = () => {
   const [inputValue, setInputValue] = useState("");
-  const { user } = useDynamicContext();
+  const { userId } = useAuth();
   const { isTyping, setIsTyping } = useChatLoading();
   const { addMessage, addChunkToMessage, conversation, updateConversationId } =
     useConversation();
 
   const onSendMessage = async () => {
     if (!inputValue) return;
-    if (!user?.userId) {
+    if (!userId) {
       toast("Please login to chat");
       return;
     }
@@ -32,7 +32,7 @@ export const ChatInput = () => {
     if (!conversation.id) {
       try {
         const data = await createNewConversationId({
-          userId: user.userId,
+          userId: userId,
         });
         updateConversationId(data.conversation.id);
         newConversationId = data.conversation.id;
@@ -46,7 +46,7 @@ export const ChatInput = () => {
 
     const reader = await hanleChatCompletion({
       message: inputValue,
-      userId: user.userId,
+      userId: userId,
       conversationId: conversation.id || newConversationId,
     });
 
@@ -119,27 +119,6 @@ export const ChatInput = () => {
           ) : (
             <Send className="h-4 w-4" />
           )}
-        </Button>
-        <Button
-          type="submit"
-          size="icon"
-          onClick={() => {
-            console.log("Clickkkked");
-            const speech = new SpeechSynthesisUtterance("My name is Jonathan");
-            speech.lang = "en-US";
-            speech.text = "My name is Jonathan";
-            speech.onstart = (e) => {
-              console.log({ e });
-            };
-
-            speech.onend = (e) => {
-              console.log({ e });
-            };
-
-            console.log("Microphone access granted");
-          }}
-        >
-          <AudioLinesIcon className="size-4" />
         </Button>
       </form>
     </CardFooter>

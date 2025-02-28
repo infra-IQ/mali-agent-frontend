@@ -72,20 +72,6 @@ export const ChatInput = () => {
           const jsonData = JSON.parse(line) as MessageChunk;
           text += jsonData.choices[0].delta.content || "";
           addChunkToMessage({ chunk: text, role: "assistant" });
-
-          if (jsonData.signal) {
-            // const resp = await paypack.cashin({
-            //   amount: 100,
-            //   number: "0789154432",
-            //   environment: "development",
-            // });
-            // console.log({ resp });
-            // createEscrow({
-            //   productId: "randomProductId",
-            //   seller: "0xdBc8997C1273bD8bc5af15f16df26C4FA03c0852",
-            //   transactionDetails: JSON.stringify(jsonData.signal),
-            // });
-          }
         } catch (err) {
           console.error("Error parsing JSON:", err, "in string:", line);
         }
